@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Category, Data } from "../interfaces/interface";
-import uniqueCategories from "../hooks/use-uniqueCategories";
+import uniqueCategories from "../helpers/uniqueCategories";
 import returnRequestedArticles from "../helpers/returnRequestedArticles";
 import updateUrl from "../helpers/updateUrl";
 import styles from "./Categories.module.css";
@@ -63,14 +63,25 @@ const Categories: React.FC<Props> = ({
               onClick={() => {
                 updateCategoryAndArticles(cat.id);
               }}
+              style={{
+                color: cat.id === categoryId ? "#6da8e5" : "rgb(246, 246, 246)",
+              }}
             >
               {cat.category}
-              <span onClick={() => deleteCategoryAndArticles(cat.id)}>X</span>
+              {/*               <span onClick={() => deleteCategoryAndArticles(cat.id)}>X</span>
+               */}{" "}
             </p>
           </div>
         );
       })}
-      <p onClick={() => updateCategoryAndArticles(0)}>Show All</p>
+      <p
+        onClick={() => updateCategoryAndArticles(0)}
+        style={{
+          color: categoryId === 0 ? "#6da8e5" : "rgb(246, 246, 246)",
+        }}
+      >
+        Show All
+      </p>
       {currentAllArticles.length < 100 && (
         <p onClick={refetchArticles}>Refetch</p>
       )}

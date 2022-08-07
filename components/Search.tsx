@@ -40,6 +40,7 @@ const Search: React.FC<Props> = ({
           type="text"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
+          placeholder="...search article title or excerpt..."
         />
         <Button onClick={(e) => handleSubmit(e)} type="submit">
           Search
@@ -63,8 +64,11 @@ const Input = styled.input`
   border: none;
   border-radius: 5px 0 0 5px;
   flex: 1;
+  font-size: 1rem;
+  outline: none;
 `;
 
 const Form = styled.form`
   display: flex;
+  height: 3rem;
 `;

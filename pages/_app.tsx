@@ -5,6 +5,7 @@ import {
   QueryClientProvider,
   Hydrate,
 } from "@tanstack/react-query";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
