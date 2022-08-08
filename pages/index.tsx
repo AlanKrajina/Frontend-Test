@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Home.module.css";
 import { useQuery, QueryClient, dehydrate } from "@tanstack/react-query";
 import { getData } from "./api/fetchData";
 import { Data } from "../interfaces/interface";
@@ -41,42 +40,44 @@ const Home: NextPage = () => {
   if (!data) return <div>No Data!</div>;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.main}>
-        <Categories
-          currentAllArticles={currentAllArticles}
-          searchValue={searchValue}
-          setDisplayedArticles={setDisplayedArticles}
-          setCurrentAllArticles={setCurrentAllArticles}
-          setsCategoryId={setsCategoryId}
-          unMutatedData={data}
-          router={router}
-          categoryId={categoryId}
-        />
-        <Search
-          currentAllArticles={currentAllArticles}
-          setDisplayedArticles={setDisplayedArticles}
-          categoryId={categoryId}
-          setSearchValue={setSearchValue}
-          searchValue={searchValue}
-          router={router}
-        />
+    <MainContainer>
+      <MainDiv>
+        {!isFetching && (
+          <>
+            <Categories
+              currentAllArticles={currentAllArticles}
+              searchValue={searchValue}
+              setDisplayedArticles={setDisplayedArticles}
+              setCurrentAllArticles={setCurrentAllArticles}
+              setsCategoryId={setsCategoryId}
+              unMutatedData={data}
+              router={router}
+              categoryId={categoryId}
+            />
+            <Search
+              currentAllArticles={currentAllArticles}
+              setDisplayedArticles={setDisplayedArticles}
+              categoryId={categoryId}
+              setSearchValue={setSearchValue}
+              searchValue={searchValue}
+              router={router}
+            />
 
-        <CurrentArticlesParaghraph>
-          {!isFetching &&
-            `Currently showing ${displayedArticles?.length} articles`}
-        </CurrentArticlesParaghraph>
-
-        <Articles
-          displayedArticles={displayedArticles}
-          currentAllArticles={currentAllArticles}
-          setDisplayedArticles={setDisplayedArticles}
-          setCurrentAllArticles={setCurrentAllArticles}
-          categoryId={categoryId}
-          searchValue={searchValue}
-        />
-      </div>
-    </div>
+            <CurrentArticlesParaghraph>
+              {`Currently showing ${displayedArticles?.length} articles`}
+            </CurrentArticlesParaghraph>
+            <Articles
+              displayedArticles={displayedArticles}
+              currentAllArticles={currentAllArticles}
+              setDisplayedArticles={setDisplayedArticles}
+              setCurrentAllArticles={setCurrentAllArticles}
+              categoryId={categoryId}
+              searchValue={searchValue}
+            />
+          </>
+        )}
+      </MainDiv>
+    </MainContainer>
   );
 };
 
@@ -95,8 +96,17 @@ export async function getStaticProps() {
 }
 
 const MainContainer = styled.div`
-  padding: 10px;
-  border: none;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: rgb(246, 246, 246);
+  font-family: sans-serif;
+`;
+
+const MainDiv = styled.div`
+  width: 70rem;
 `;
 
 const CurrentArticlesParaghraph = styled.p`

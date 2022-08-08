@@ -27,6 +27,8 @@ const Categories: React.FC<Props> = ({
   categoryId,
 }) => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [showDeleteButton, setShowDeleteButtons] = useState<boolean>(false);
+  const [currentCategoryId, setCurrentCategoryId] = useState<number>(0);
 
   useEffect(() => {
     // from enums on mount sets categories + when category gets deleted
@@ -58,8 +60,15 @@ const Categories: React.FC<Props> = ({
     <Container>
       {categories.map((cat) => {
         return (
-          <CategoriesDiv key={cat.id}>
-            <p
+          <CategoriesDiv
+            key={cat.id}
+            onMouseEnter={() => {
+              setCurrentCategoryId(cat.id);
+              setShowDeleteButtons(true);
+            }}
+            onMouseLeave={() => setShowDeleteButtons(false)}
+          >
+            <CategoriesParagraph
               onClick={() => {
                 updateCategoryAndArticles(cat.id);
               }}
@@ -70,9 +79,12 @@ const Categories: React.FC<Props> = ({
               }}
             >
               {cat.category}
-              {/*               <span onClick={() => deleteCategoryAndArticles(cat.id)}>X</span>
-               */}{" "}
-            </p>
+            </CategoriesParagraph>
+            {currentCategoryId === cat.id && showDeleteButton && (
+              <DeleteButton onClick={() => deleteCategoryAndArticles(cat.id)}>
+                X
+              </DeleteButton>
+            )}
           </CategoriesDiv>
         );
       })}
@@ -102,6 +114,10 @@ const Container = styled.div`
 `;
 
 const CategoriesDiv = styled.div`
+  position: relative;
+`;
+
+const CategoriesParagraph = styled.p`
   cursor: pointer;
 `;
 
@@ -112,4 +128,23 @@ const ShowAll = styled.p`
 const Refetch = styled.p`
   cursor: pointer;
   color: red;
+`;
+
+const DeleteButton = styled.button`
+  height: 17px;
+  width: 15px;
+  cursor: pointer;
+  background-color: red;
+  border-radius: 30%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  font-size: x-small;
+  z-index: 2;
 `;

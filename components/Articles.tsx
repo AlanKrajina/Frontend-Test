@@ -156,8 +156,8 @@ const ImageDiv = styled.div`
 `;
 
 const DeleteButtonDiv = styled.div`
-  height: 70px;
-  width: 70px;
+  height: 50px;
+  width: 50px;
   position: absolute;
   top: 0;
   right: 10px;
@@ -175,5 +175,5 @@ const DeleteButton = styled.button`
   color: white;
   display: flex;
   justify-content: center;
-  margin: 0 0 15px 15px;
+  margin: 0 0 5px 5px;
 `;
