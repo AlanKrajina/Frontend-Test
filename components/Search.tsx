@@ -55,8 +55,13 @@ export default Search;
 const Button = styled.button`
   padding: 10px;
   border: none;
-  background-color: #6da8e5;
+  background-color: #63a3e5;
   border-radius: 0 5px 5px 0;
+  width: 8rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: white;
+  cursor: pointer;
 `;
 
 const Input = styled.input`

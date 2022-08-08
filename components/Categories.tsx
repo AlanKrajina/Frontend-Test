@@ -3,7 +3,7 @@ import { Category, Data } from "../interfaces/interface";
 import uniqueCategories from "../helpers/uniqueCategories";
 import returnRequestedArticles from "../helpers/returnRequestedArticles";
 import updateUrl from "../helpers/updateUrl";
-import styles from "./Categories.module.css";
+import styled from "@emotion/styled";
 
 interface Props {
   currentAllArticles: Data[];
@@ -55,38 +55,61 @@ const Categories: React.FC<Props> = ({
   };
 
   return (
-    <div className={styles.container}>
+    <Container>
       {categories.map((cat) => {
         return (
-          <div key={cat.id}>
+          <CategoriesDiv key={cat.id}>
             <p
               onClick={() => {
                 updateCategoryAndArticles(cat.id);
               }}
               style={{
                 color: cat.id === categoryId ? "#6da8e5" : "rgb(246, 246, 246)",
+                borderBottom:
+                  cat.id === categoryId ? "2px solid #6da8e5" : "none",
               }}
             >
               {cat.category}
               {/*               <span onClick={() => deleteCategoryAndArticles(cat.id)}>X</span>
                */}{" "}
             </p>
-          </div>
+          </CategoriesDiv>
         );
       })}
-      <p
+      <ShowAll
         onClick={() => updateCategoryAndArticles(0)}
         style={{
           color: categoryId === 0 ? "#6da8e5" : "rgb(246, 246, 246)",
+          borderBottom: categoryId === 0 ? "2px solid #6da8e5" : "none",
         }}
       >
         Show All
-      </p>
+      </ShowAll>
       {currentAllArticles.length < 100 && (
-        <p onClick={refetchArticles}>Refetch</p>
+        <Refetch onClick={refetchArticles}>Refetch</Refetch>
       )}
-    </div>
+    </Container>
   );
 };
 
 export default Categories;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 1.3rem;
+`;
+
+const CategoriesDiv = styled.div`
+  cursor: pointer;
+`;
+
+const ShowAll = styled.p`
+  cursor: pointer;
+`;
+
+const Refetch = styled.p`
+  cursor: pointer;
+  color: red;
+`;

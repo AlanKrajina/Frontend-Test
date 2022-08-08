@@ -10,7 +10,6 @@ import Search from "../components/Search";
 import { useRouter } from "next/router";
 import _ from "lodash";
 import styled from "@emotion/styled";
-import background from "../public/background.jpg";
 
 const Home: NextPage = () => {
   const [displayedArticles, setDisplayedArticles] = useState<Data[]>([]);
@@ -42,13 +41,7 @@ const Home: NextPage = () => {
   if (!data) return <div>No Data!</div>;
 
   return (
-    <div
-      className={styles.container}
-      style={{
-        backgroundImage: `url(${background.src})`,
-        backgroundPosition: "center",
-      }}
-    >
+    <div className={styles.container}>
       <div className={styles.main}>
         <Categories
           currentAllArticles={currentAllArticles}
@@ -60,7 +53,6 @@ const Home: NextPage = () => {
           router={router}
           categoryId={categoryId}
         />
-
         <Search
           currentAllArticles={currentAllArticles}
           setDisplayedArticles={setDisplayedArticles}
@@ -70,11 +62,10 @@ const Home: NextPage = () => {
           router={router}
         />
 
-        {!isFetching && (
-          <CurrentArticlesParaghraph>
-            Currently showing {displayedArticles?.length} articles
-          </CurrentArticlesParaghraph>
-        )}
+        <CurrentArticlesParaghraph>
+          {!isFetching &&
+            `Currently showing ${displayedArticles?.length} articles`}
+        </CurrentArticlesParaghraph>
 
         <Articles
           displayedArticles={displayedArticles}
@@ -112,4 +103,5 @@ const CurrentArticlesParaghraph = styled.p`
   display: flex;
   justify-content: right;
   font-size: 1.1rem;
+  height: 1.1rem;
 `;

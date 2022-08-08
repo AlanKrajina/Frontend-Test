@@ -1,9 +1,10 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import returnRequestedArticles from "../helpers/returnRequestedArticles";
 import { Data, Item } from "../interfaces/interface";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import { css } from "@emotion/react";
 
 interface Props {
   displayedArticles: Data[];
@@ -22,6 +23,9 @@ const Articles: React.FC<Props> = ({
   categoryId,
   searchValue,
 }) => {
+  const [showDeleteButton, setShowDeleteButtons] = useState<boolean>(false);
+  const [currentArticle, setCurrentArticle] = useState<string>("");
+
   useEffect(() => {
     setDisplayedArticles(
       returnRequestedArticles(currentAllArticles, categoryId, searchValue)
@@ -49,13 +53,27 @@ const Articles: React.FC<Props> = ({
         }) => {
           return (
             <ArticleMain key={article.slug}>
-              <Image
-                src={`https://www.alpha-orbital.com/assets/images/post_img/${article.post_image}`}
-                alt="Picture of the author"
-                width={500}
-                height={500}
-                style={{ flex: 1 }}
-              />
+              <ImageDiv>
+                <Image
+                  src={`https://www.alpha-orbital.com/assets/images/post_img/${article.post_image}`}
+                  alt="Picture of the author"
+                  width={500}
+                  height={300}
+                />
+                <DeleteButtonDiv
+                  onMouseEnter={() => {
+                    setCurrentArticle(article.slug);
+                    setShowDeleteButtons(true);
+                  }}
+                  onMouseLeave={() => setShowDeleteButtons(false)}
+                >
+                  {currentArticle === article.slug && showDeleteButton && (
+                    <DeleteButton onClick={() => deleteArticle(article)}>
+                      X
+                    </DeleteButton>
+                  )}
+                </DeleteButtonDiv>
+              </ImageDiv>
               <ArticleDiv>
                 <TitleDateDiv>
                   <Link href={`/article/${encodeURIComponent(article.slug)}`}>
@@ -73,8 +91,6 @@ const Articles: React.FC<Props> = ({
                 >
                   <ExternalLink>Full Article</ExternalLink>
                 </a>
-                {/*                 <button onClick={() => deleteArticle(el)}>Delete</button>
-                 */}{" "}
               </ArticleDiv>
             </ArticleMain>
           );
@@ -132,4 +148,32 @@ const ExternalLink = styled.p`
   margin: 0.6rem 0 0.6rem 0;
   display: flex;
   justify-content: end;
+`;
+
+const ImageDiv = styled.div`
+  flex: 1;
+  position: relative;
+`;
+
+const DeleteButtonDiv = styled.div`
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DeleteButton = styled.button`
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  background-color: red;
+  border-radius: 30%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 15px 15px;
 `;
