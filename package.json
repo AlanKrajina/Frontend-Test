@@ -16,7 +16,9 @@
     "lodash": "^4.17.21",
     "next": "12.2.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-lines-ellipsis": "^0.15.2",
+    "react-virtualized": "^9.22.3"
   },
   "devDependencies": {
     "@types/node": "18.6.1",

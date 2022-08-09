@@ -4,6 +4,7 @@ import uniqueCategories from "../helpers/uniqueCategories";
 import returnRequestedArticles from "../helpers/returnRequestedArticles";
 import updateUrl from "../helpers/updateUrl";
 import styled from "@emotion/styled";
+import ToggleDropdown from "./ToggleDropdown";
 
 interface Props {
   currentAllArticles: Data[];
@@ -60,14 +61,7 @@ const Categories: React.FC<Props> = ({
     <Container>
       {categories.map((cat) => {
         return (
-          <CategoriesDiv
-            key={cat.id}
-            onMouseEnter={() => {
-              setCurrentCategoryId(cat.id);
-              setShowDeleteButtons(true);
-            }}
-            onMouseLeave={() => setShowDeleteButtons(false)}
-          >
+          <CategoriesDiv key={cat.id}>
             <CategoriesParagraph
               onClick={() => {
                 updateCategoryAndArticles(cat.id);
@@ -80,11 +74,6 @@ const Categories: React.FC<Props> = ({
             >
               {cat.category}
             </CategoriesParagraph>
-            {currentCategoryId === cat.id && showDeleteButton && (
-              <DeleteButton onClick={() => deleteCategoryAndArticles(cat.id)}>
-                X
-              </DeleteButton>
-            )}
           </CategoriesDiv>
         );
       })}
@@ -100,6 +89,12 @@ const Categories: React.FC<Props> = ({
       {currentAllArticles.length < 100 && (
         <Refetch onClick={refetchArticles}>Refetch</Refetch>
       )}
+      {categories.length > 0 && (
+        <ToggleDropdown
+          categories={categories}
+          deleteCategoryAndArticles={deleteCategoryAndArticles}
+        />
+      )}
     </Container>
   );
 };
@@ -111,6 +106,7 @@ const Container = styled.div`
   justify-content: center;
   gap: 2rem;
   font-size: 1.3rem;
+  position: relative;
 `;
 
 const CategoriesDiv = styled.div`
@@ -127,7 +123,7 @@ const ShowAll = styled.p`
 
 const Refetch = styled.p`
   cursor: pointer;
-  color: red;
+  color: #ff5b5b;
 `;
 
 const DeleteButton = styled.button`

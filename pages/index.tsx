@@ -112,6 +112,6 @@ const MainDiv = styled.div`
 const CurrentArticlesParaghraph = styled.p`
   display: flex;
   justify-content: right;
-  font-size: 1.1rem;
-  height: 1.1rem;
+  font-size: 1rem;
+  height: 1rem;
 `;
