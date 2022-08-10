@@ -17,7 +17,7 @@ const VirtualizedArticles: React.FC<Props> = ({
 }) => {
   const [showDeleteButton, setShowDeleteButtons] = useState<boolean>(false);
   const [currentArticle, setCurrentArticle] = useState<string>("");
-  const listHeight: number = 860;
+  const listHeight: number = 850;
   const rowHeight: number = 290;
   const rowWidth: number = 1120;
 
