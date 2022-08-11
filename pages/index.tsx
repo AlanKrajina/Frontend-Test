@@ -51,7 +51,6 @@ const Home: NextPage = () => {
               setCurrentAllArticles={setCurrentAllArticles}
               setsCategoryId={setsCategoryId}
               unMutatedData={data}
-              router={router}
               categoryId={categoryId}
             />
             <Search
@@ -60,7 +59,6 @@ const Home: NextPage = () => {
               categoryId={categoryId}
               setSearchValue={setSearchValue}
               searchValue={searchValue}
-              router={router}
             />
 
             <CurrentArticlesParaghraph>

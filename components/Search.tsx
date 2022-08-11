@@ -4,6 +4,7 @@ import returnRequestedArticles from "../helpers/returnRequestedArticles";
 import _ from "lodash";
 import updateUrl from "../helpers/updateUrl";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 interface Props {
   currentAllArticles: Data[];
@@ -11,7 +12,6 @@ interface Props {
   searchValue: string;
   setDisplayedArticles: React.Dispatch<React.SetStateAction<Data[]>>;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  router: any;
 }
 
 const Search: React.FC<Props> = ({
@@ -20,8 +20,8 @@ const Search: React.FC<Props> = ({
   categoryId,
   searchValue,
   setSearchValue,
-  router,
 }) => {
+  const router = useRouter();
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
@@ -50,7 +50,7 @@ const Search: React.FC<Props> = ({
   );
 };
 
-export default Search;
+export default React.memo(Search);
 
 const Button = styled.button`
   padding: 10px;

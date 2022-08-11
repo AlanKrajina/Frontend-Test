@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import returnRequestedArticles from "../helpers/returnRequestedArticles";
-import { Data, Item } from "../interfaces/interface";
+import { Data } from "../interfaces/interface";
 import VirtualizedArticles from "./VirtualizedArticles";
 
 interface Props {
@@ -35,4 +35,4 @@ const Articles: React.FC<Props> = ({
   );
 };
 
-export default Articles;
+export default React.memo(Articles);

@@ -5,6 +5,7 @@ import returnRequestedArticles from "../helpers/returnRequestedArticles";
 import updateUrl from "../helpers/updateUrl";
 import styled from "@emotion/styled";
 import ToggleDropdown from "./ToggleDropdown";
+import { useRouter } from "next/router";
 
 interface Props {
   currentAllArticles: Data[];
@@ -13,7 +14,6 @@ interface Props {
   setsCategoryId: React.Dispatch<React.SetStateAction<number>>;
   setDisplayedArticles: React.Dispatch<React.SetStateAction<Data[]>>;
   setCurrentAllArticles: React.Dispatch<React.SetStateAction<Data[]>>;
-  router: any;
   categoryId: number;
 }
 
@@ -24,12 +24,10 @@ const Categories: React.FC<Props> = ({
   setsCategoryId,
   unMutatedData,
   setCurrentAllArticles,
-  router,
   categoryId,
 }) => {
+  const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
-  const [showDeleteButton, setShowDeleteButtons] = useState<boolean>(false);
-  const [currentCategoryId, setCurrentCategoryId] = useState<number>(0);
 
   useEffect(() => {
     // from enums on mount sets categories + when category gets deleted
@@ -66,26 +64,23 @@ const Categories: React.FC<Props> = ({
               onClick={() => {
                 updateCategoryAndArticles(cat.id);
               }}
-              style={{
-                color: cat.id === categoryId ? "#6da8e5" : "rgb(246, 246, 246)",
-                borderBottom:
-                  cat.id === categoryId ? "2px solid #6da8e5" : "none",
-              }}
+              color={cat.id === categoryId ? "#6da8e5" : "rgb(246, 246, 246)"}
+              borderBottom={
+                cat.id === categoryId ? "2px solid #6da8e5" : "none"
+              }
             >
               {cat.category}
             </CategoriesParagraph>
           </CategoriesDiv>
         );
       })}
-      <ShowAll
+      <CategoriesParagraph
         onClick={() => updateCategoryAndArticles(0)}
-        style={{
-          color: categoryId === 0 ? "#6da8e5" : "rgb(246, 246, 246)",
-          borderBottom: categoryId === 0 ? "2px solid #6da8e5" : "none",
-        }}
+        color={categoryId === 0 ? "#6da8e5" : "rgb(246, 246, 246)"}
+        borderBottom={categoryId === 0 ? "2px solid #6da8e5" : "none"}
       >
         Show All
-      </ShowAll>
+      </CategoriesParagraph>
       {currentAllArticles.length < 100 && (
         <Refetch onClick={refetchArticles}>Refetch</Refetch>
       )}
@@ -99,7 +94,12 @@ const Categories: React.FC<Props> = ({
   );
 };
 
-export default Categories;
+export default React.memo(Categories);
+
+type StylingProps = {
+  color: string;
+  borderBottom: string;
+};
 
 const Container = styled.div`
   display: flex;
@@ -113,34 +113,13 @@ const CategoriesDiv = styled.div`
   position: relative;
 `;
 
-const CategoriesParagraph = styled.p`
+const CategoriesParagraph = styled.p<StylingProps>`
   cursor: pointer;
-`;
-
-const ShowAll = styled.p`
-  cursor: pointer;
+  color: ${(props) => props.color};
+  border-bottom: ${(props) => props.borderBottom};
 `;
 
 const Refetch = styled.p`
   cursor: pointer;
   color: #ff5b5b;
-`;
-
-const DeleteButton = styled.button`
-  height: 17px;
-  width: 15px;
-  cursor: pointer;
-  background-color: red;
-  border-radius: 30%;
-  color: white;
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  top: 0;
-  font-size: x-small;
-  z-index: 2;
 `;
