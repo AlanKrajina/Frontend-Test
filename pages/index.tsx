@@ -103,9 +103,7 @@ const MainContainer = styled.div`
   font-family: sans-serif;
 `;
 
-const MainDiv = styled.div`
-  width: 70rem;
-`;
+const MainDiv = styled.div``;
 
 const CurrentArticlesParaghraph = styled.p`
   display: flex;

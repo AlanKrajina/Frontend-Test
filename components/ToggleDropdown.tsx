@@ -48,7 +48,7 @@ export default ToggleDropdown;
 const MainDiv = styled.div`
   position: absolute;
   align-self: center;
-  right: 0;
+  right: -2rem;
 `;
 
 type ButtonProps = {

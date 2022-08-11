@@ -107,6 +107,7 @@ const Container = styled.div`
   gap: 2rem;
   font-size: 1.3rem;
   position: relative;
+  margin: 0 2rem 0 2rem;
 `;
 
 const CategoriesDiv = styled.div`

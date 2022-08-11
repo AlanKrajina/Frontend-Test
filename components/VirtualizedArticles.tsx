@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Data, Item } from "../interfaces/interface";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { List } from "react-virtualized";
+import { List, AutoSizer } from "react-virtualized";
 import LinesEllipsis from "react-lines-ellipsis";
 
 interface Props {
@@ -17,9 +17,7 @@ const VirtualizedArticles: React.FC<Props> = ({
 }) => {
   const [showDeleteButton, setShowDeleteButtons] = useState<boolean>(false);
   const [currentArticle, setCurrentArticle] = useState<string>("");
-  const listHeight: number = 850;
   const rowHeight: number = 290;
-  const rowWidth: number = 1120;
 
   const deleteArticle = (deletedArticle: Item): void => {
     setCurrentAllArticles((previousArticles: Data[]) =>
@@ -94,15 +92,19 @@ const VirtualizedArticles: React.FC<Props> = ({
   };
 
   return (
-    <div>
-      <List
-        width={rowWidth}
-        height={listHeight}
-        rowHeight={rowHeight}
-        rowRenderer={renderRow}
-        rowCount={displayedArticles.length}
-        overscanRowCount={3}
-      />
+    <div className="list">
+      <AutoSizer>
+        {({ height, width }: any) => (
+          <List
+            width={width}
+            height={height}
+            rowHeight={rowHeight}
+            rowRenderer={renderRow}
+            rowCount={displayedArticles.length}
+            overscanRowCount={3}
+          />
+        )}
+      </AutoSizer>
     </div>
   );
 };

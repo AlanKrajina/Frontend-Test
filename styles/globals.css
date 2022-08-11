@@ -13,3 +13,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.list {
+  height: calc(100vh - 230px);
+  min-width: calc(100vw - 70rem);
+}
