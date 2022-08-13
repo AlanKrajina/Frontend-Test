@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Category, Data } from "../interfaces/interface";
 import uniqueCategories from "../helpers/uniqueCategories";
 import returnRequestedArticles from "../helpers/returnRequestedArticles";
@@ -6,6 +6,7 @@ import updateUrl from "../helpers/updateUrl";
 import styled from "@emotion/styled";
 import ToggleDropdown from "./ToggleDropdown";
 import { useRouter } from "next/router";
+import { MediaQueryContext } from "../pages/_app";
 
 interface Props {
   currentAllArticles: Data[];
@@ -28,8 +29,10 @@ const Categories: React.FC<Props> = ({
 }) => {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
+  const { isDesktop } = useContext(MediaQueryContext);
 
-  useEffect(() => {
+  /*   console.log(isDesktop);
+   */ useEffect(() => {
     // from enums on mount sets categories + when category gets deleted
     setCategories(uniqueCategories(currentAllArticles));
   }, [currentAllArticles]);
@@ -56,7 +59,10 @@ const Categories: React.FC<Props> = ({
   };
 
   return (
-    <Container>
+    <Container
+      gap={isDesktop ? "2rem" : "1rem"}
+      fontSize={isDesktop ? "1.3rem" : "0.8rem"}
+    >
       {categories.map((cat) => {
         return (
           <CategoriesDiv key={cat.id}>
@@ -101,11 +107,16 @@ type StylingProps = {
   borderBottom: string;
 };
 
-const Container = styled.div`
+type ContainerProps = {
+  fontSize: string;
+  gap: string;
+};
+
+const Container = styled.div<ContainerProps>`
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  font-size: 1.3rem;
+  gap: ${(props) => props.fontSize};
+  font-size: ${(props) => props.fontSize};
   position: relative;
   margin: 0 2rem 0 2rem;
 `;

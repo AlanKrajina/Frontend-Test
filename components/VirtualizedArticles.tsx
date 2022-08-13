@@ -1,10 +1,11 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Data, Item } from "../interfaces/interface";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import LinesEllipsis from "react-lines-ellipsis";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { MediaQueryContext } from "../pages/_app";
 
 interface Props {
   displayedArticles: Data[];
@@ -17,6 +18,7 @@ const VirtualizedArticles: React.FC<Props> = ({
 }) => {
   const [showDeleteButton, setShowDeleteButtons] = useState<boolean>(false);
   const [currentArticle, setCurrentArticle] = useState<string>("");
+  const { isDesktop } = useContext(MediaQueryContext);
 
   const deleteArticle = (deletedArticle: Item): void => {
     setCurrentAllArticles((previousArticles: Data[]) =>
@@ -61,8 +63,11 @@ const VirtualizedArticles: React.FC<Props> = ({
               transform: `translateY(${virtualRow.start}px)`,
             }}
           >
-            <div style={{ height: 290 }}>
-              <ArticleMain>
+            <div>
+              <ArticleMain
+                height={isDesktop ? "19rem" : "24rem"}
+                flexDirection={isDesktop ? "row" : "column"}
+              >
                 <ImageDiv>
                   <Image
                     src={`https://www.alpha-orbital.com/assets/images/post_img/${
@@ -101,7 +106,9 @@ const VirtualizedArticles: React.FC<Props> = ({
                         displayedArticles[virtualRow.index].slug
                       )}`}
                     >
-                      <Title>{displayedArticles[virtualRow.index].title}</Title>
+                      <Title fontSize={isDesktop ? "1.4rem" : "1rem"}>
+                        {displayedArticles[virtualRow.index].title}
+                      </Title>
                     </Link>
                     <Date>{displayedArticles[virtualRow.index].date}</Date>
                   </TitleDateDiv>
@@ -111,7 +118,7 @@ const VirtualizedArticles: React.FC<Props> = ({
                         /<\/?p[^>]*>/g,
                         ""
                       )}
-                      maxLine="5"
+                      maxLine={isDesktop ? "5" : "2"}
                       ellipsis="..."
                       trimRight
                       basedOn="letters"
@@ -138,12 +145,22 @@ const VirtualizedArticles: React.FC<Props> = ({
 
 export default React.memo(VirtualizedArticles);
 
-const ArticleMain = styled.div`
+type StylingProps = {
+  flexDirection: string;
+  height: string;
+};
+
+type TitleProps = {
+  fontSize: string;
+};
+
+const ArticleMain = styled.div<StylingProps>`
   display: flex;
-  height: 23rem;
-  padding: 2rem;
+  height: ${(props) => props.height};
+  padding: 1rem 2rem 2rem 2rem;
   background-color: rgba(0, 0, 0, 0.6);
   gap: 2rem;
+  flex-direction: ${(props) => props.flexDirection};
 `;
 
 const ArticleDiv = styled.div`
@@ -159,9 +176,9 @@ const TitleDateDiv = styled.div`
   justify-content: space-between;
 `;
 
-const Title = styled.p`
+const Title = styled.p<TitleProps>`
   color: white;
-  font-size: 1.4rem;
+  font-size: ${(props) => props.fontSize};
   margin: 0.6rem 0 0.6rem 0;
   cursor: pointer;
 `;

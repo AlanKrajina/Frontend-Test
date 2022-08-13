@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Data } from "../interfaces/interface";
 import returnRequestedArticles from "../helpers/returnRequestedArticles";
 import _ from "lodash";
 import updateUrl from "../helpers/updateUrl";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import { MediaQueryContext } from "../pages/_app";
 
 interface Props {
   currentAllArticles: Data[];
@@ -22,6 +23,8 @@ const Search: React.FC<Props> = ({
   setSearchValue,
 }) => {
   const router = useRouter();
+  const { isDesktop } = useContext(MediaQueryContext);
+
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
@@ -34,8 +37,8 @@ const Search: React.FC<Props> = ({
   };
 
   return (
-    <div>
-      <Form>
+    <MainDiv>
+      <Form width={isDesktop ? "100%" : "unset"}>
         <Input
           type="text"
           value={searchValue}
@@ -46,11 +49,20 @@ const Search: React.FC<Props> = ({
           Search
         </Button>
       </Form>
-    </div>
+    </MainDiv>
   );
 };
 
 export default React.memo(Search);
+
+type StylingProps = {
+  width: string;
+};
+
+const MainDiv = styled.div`
+  justify-content: center;
+  display: flex;
+`;
 
 const Button = styled.button`
   padding: 10px;
@@ -73,7 +85,8 @@ const Input = styled.input`
   outline: none;
 `;
 
-const Form = styled.form`
+const Form = styled.form<StylingProps>`
   display: flex;
   height: 3rem;
+  width: ${(props) => props.width};
 `;
