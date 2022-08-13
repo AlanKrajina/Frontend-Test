@@ -31,8 +31,7 @@ const Categories: React.FC<Props> = ({
   const [categories, setCategories] = useState<Category[]>([]);
   const { isDesktop } = useContext(MediaQueryContext);
 
-  /*   console.log(isDesktop);
-   */ useEffect(() => {
+  useEffect(() => {
     // from enums on mount sets categories + when category gets deleted
     setCategories(uniqueCategories(currentAllArticles));
   }, [currentAllArticles]);

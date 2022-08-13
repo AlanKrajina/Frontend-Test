@@ -18,7 +18,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
   const isDesktop = useMediaQuery("(min-width: 430px)");
 
-  console.log(isDesktop);
   return (
     <MediaQueryContext.Provider value={{ isDesktop }}>
       <QueryClientProvider client={queryClient}>
