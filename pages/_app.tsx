@@ -16,7 +16,7 @@ export const MediaQueryContext = React.createContext({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
-  const isDesktop = useMediaQuery("(min-width: 430px)");
+  const isDesktop = useMediaQuery("(min-width: 550px)");
 
   return (
     <MediaQueryContext.Provider value={{ isDesktop }}>

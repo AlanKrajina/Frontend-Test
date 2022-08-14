@@ -38,14 +38,23 @@ const Search: React.FC<Props> = ({
 
   return (
     <MainDiv>
-      <Form width={isDesktop ? "100%" : "unset"}>
+      <Form
+        width={isDesktop ? "100%" : "18rem"}
+        height={isDesktop ? "3rem" : "2rem"}
+      >
         <Input
           type="text"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder="...search article title or excerpt..."
+          fontSize={isDesktop ? "0.9rem" : "0.7rem"}
         />
-        <Button onClick={(e) => handleSubmit(e)} type="submit">
+        <Button
+          onClick={(e) => handleSubmit(e)}
+          type="submit"
+          width={isDesktop ? "8rem" : "4rem"}
+          fontSize={isDesktop ? "0.9rem" : "0.7rem"}
+        >
           Search
         </Button>
       </Form>
@@ -55,8 +64,18 @@ const Search: React.FC<Props> = ({
 
 export default React.memo(Search);
 
-type StylingProps = {
+type FormProps = {
   width: string;
+  height: string;
+};
+
+type ButtonProps = {
+  width: string;
+  fontSize: string;
+};
+
+type InputProps = {
+  fontSize: string;
 };
 
 const MainDiv = styled.div`
@@ -64,29 +83,29 @@ const MainDiv = styled.div`
   display: flex;
 `;
 
-const Button = styled.button`
+const Button = styled.button<ButtonProps>`
   padding: 10px;
   border: none;
   background-color: #63a3e5;
   border-radius: 0 5px 5px 0;
-  width: 8rem;
-  font-size: 0.9rem;
+  width: ${(props) => props.width};
+  font-size: ${(props) => props.fontSize};
   text-transform: uppercase;
   color: white;
   cursor: pointer;
 `;
 
-const Input = styled.input`
+const Input = styled.input<InputProps>`
   padding: 10px;
   border: none;
   border-radius: 5px 0 0 5px;
   flex: 1;
-  font-size: 1rem;
+  font-size: ${(props) => props.fontSize};
   outline: none;
 `;
 
-const Form = styled.form<StylingProps>`
+const Form = styled.form<FormProps>`
   display: flex;
-  height: 3rem;
+  height: ${(props) => props.height};
   width: ${(props) => props.width};
 `;

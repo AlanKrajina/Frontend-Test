@@ -65,7 +65,7 @@ const VirtualizedArticles: React.FC<Props> = ({
           >
             <div>
               <ArticleMain
-                height={isDesktop ? "19rem" : "24rem"}
+                height={isDesktop ? "19rem" : "27rem"}
                 flexDirection={isDesktop ? "row" : "column"}
               >
                 <ImageDiv>
@@ -157,7 +157,7 @@ type TitleProps = {
 const ArticleMain = styled.div<StylingProps>`
   display: flex;
   height: ${(props) => props.height};
-  padding: 1rem 2rem 2rem 2rem;
+  padding: 1rem 2rem 3rem 2rem;
   background-color: rgba(0, 0, 0, 0.6);
   gap: 2rem;
   flex-direction: ${(props) => props.flexDirection};
